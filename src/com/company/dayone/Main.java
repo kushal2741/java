@@ -19,17 +19,17 @@ public class Main {
         obj1.getOcuurencesOfCharacter("He is vegetarian and hates non vegetarian food", "a");
 
         System.out.println("<<<<<------Calculate the number & Percentage Of Lowercase Letters,Uppercase Letters, Digits And Other Special Characters In A String--->>>>>>");
-        obj1.getNumberPercentage("The Wind s Blowing @ 100km/hour");
+        obj1.getNumberPercentage("@100Km/hour");
 
         System.out.println("<<<<<------Find common elements between two arrays-->>>>>");
-        String[] s1 = {"ONE", "TWO", "THREE", "FOUR", "FIVE", "FOUR","1","2","5","6"};
+        int[] s1 = {2,3,4,5,7,7,5};
 
-        String[] s2 = {"1","2","3","4","THREE"};
-        obj1.getCoomonElements(s1,s2);
+        int[] s2 = {1,6,4,5,2,3,6,5};
+        obj1.getCoomonElements(s1,s2 );
 
         System.out.println("<<<<<------There is an array with every element repeated twice except one---->>>>>>>");
 
-        Integer [] s3 = {1,2,3,4,5,6,1,2,3,4,5,6,7};
+        int [] s3 = {1,2,3,4,5,6,1,2,3,4,5,6,8};
         //obj1.getSingleElement(s3);
         System.out.println("The element without duplicacy is " + obj1.getSingleElement(s3));
 
@@ -89,19 +89,18 @@ public class Main {
 
     public void getDuplicateOcuurences(String string) {
 
-        String[] arrString = string.split(" ");
-        Integer[] occurence = new Integer[arrString.length];
-        Arrays.fill(occurence, 0);
-        for (int i = 0; i < arrString.length; i++) {
-            for (int j = 0; j < arrString.length; j++) {
-                if (arrString[i].equals(arrString[j]))
-                    occurence[i]++;
+        String[] words = string.split(" ");
+        int wordc = 1;
+        for (int i = 0; i < words.length; i++) {
+            for (int j = i + 1; j < words.length; j++) {
+                if (words[i].equals(words[j])) {
+                  wordc=wordc+1;
+                  words[j]="0";
+                }
             }
-        }
-        for (int i = 0; i < occurence.length; i++) {
-            if (occurence[i] > 1) {
-                System.out.println(occurence[i]);
-            }
+            if (words[i] != "0")
+                System.out.println(words[i] + "--" + wordc);
+            wordc = 1;
         }
     }
 
@@ -118,9 +117,8 @@ public class Main {
         int charStringLength = charstr.length();
         int lowercase = 0;
         int upperCase = 0;
-        int otherschars = 0;
         int digit = 0;
-        int letterchars = 0;
+        int specialchars = 0;
         for (int i = 0; i < charstr.length(); i++) {
 
             char strch = charstr.charAt(i);
@@ -131,12 +129,12 @@ public class Main {
             } else if (Character.isDigit(strch)) {
                 digit++;
             } else {
-                letterchars++;
+                specialchars++;
             }
 
 
         }
-        Float alphabeticPercentage = (float) letterchars / charStringLength * 100;
+        Float specialPercentage = (float) specialchars / charStringLength * 100;
         Float lowercasePercentage = (float) lowercase / charStringLength * 100;
         Float uppercasePercentage = (float) upperCase / charStringLength * 100;
         Float digitPercentage = (float)  digit / charStringLength * 100;
@@ -145,41 +143,49 @@ public class Main {
         System.out.println("Uppercase letters count" + upperCase);
         System.out.println("Lowercase letters count" + lowercase);
         System.out.println("Digit Count is " + digit);
-        System.out.println("alphabeticPercentage is " + alphabeticPercentage);
+        System.out.println("Special character Count is " + specialchars);
+        System.out.println("special character Percentage is " + specialPercentage);
         System.out.println("lowercasePercentage is " + lowercasePercentage);
         System.out.println("uppercasePercentage is " + uppercasePercentage);
         System.out.println("digitPercentage is " + digitPercentage);
 
     }
 
-    public void getCoomonElements(String [] s1,String [] s2){
-
-       int stringOneArrLength = s1.length;
-       int stringTwoArrLength = s2.length;
-       int j = 0;
-       for(int i = 0; i < stringOneArrLength; i++){
-           for(int k =0 ; k < stringTwoArrLength; k++){
-               if(s1[i] == s2[k]){
-                  j++;
-               }
-           }
-
-       }
-       System.out.println("No of common elemnts are " + j);
-    }
-
-    public int getSingleElement(Integer [] arraynum){
-        int nondub =0;
-        int arraynumlength = arraynum.length;
-        int count = 0;
-        for(int i = 0; i < arraynumlength; i++){
-            for(int j = 0; j < arraynumlength; j++){
-                if(arraynum[j]!=arraynum[i]){
-                 nondub = arraynum[i];
+    public void getCoomonElements(int [] s1,int [] s2) {
+           int [] arr1 = unique_array(s1);
+           int [] arr2 = unique_array(s2);
+        for (int i = 0; i < arr1.length; i++) {
+            for (int j = 0; j < arr2.length; j++) {
+                if (arr1[i] == arr2[j]) {
+                    System.out.println("Common element is : " + arr1[i]);
                 }
+
             }
         }
-    return nondub;
+    }
+
+    static int[] unique_array(int[] my_array){
+
+      int no_unique_elements = my_array.length;
+      for (int i = 0; i < no_unique_elements; i++) {
+          for (int j = i+1; j < no_unique_elements; j++){
+              if(my_array[i] == my_array[j]){
+                   my_array[j] = my_array[no_unique_elements-1];
+                   no_unique_elements--;
+                   j--;
+              }
+          }
+      }
+      int[] array1 = Arrays.copyOf(my_array, no_unique_elements);
+      return array1;
+    }
+
+    public int getSingleElement(int [] arraynum){
+        int nondub = arraynum[0];
+        int arraynumlength = arraynum.length;
+        for(int i = 1; i < arraynumlength; i++)
+           nondub = nondub ^ arraynum[i];
+           return nondub;
     }
 
     public void reverseString(String string){
@@ -291,26 +297,24 @@ class Math{
     }
 }
 
-class bank{
-    public void getDetails(){
-
-    }
+abstract class Bank{
+    abstract public void getDetails();
 
 }
 
-class SBI extends bank{
+class SBI extends Bank{
 
 public void getDetails(){
  System.out.println("The rate of interest of SBI BANK for Home loan is 8%");
 }
 }
 
-class BOI extends bank{
+class BOI extends Bank{
     public void getDetails(){
         System.out.println("The rate of interest of BOI BANK for Home loan is 10%");
     }
 }
-class ICICI extends bank{
+class ICICI extends Bank{
     public void getDetails(){
         System.out.println("The rate of interest of ICICI BANK for Home loan is 15%");
     }
