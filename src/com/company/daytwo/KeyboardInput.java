@@ -1,5 +1,8 @@
 package com.company.daytwo;
 import java.util.*;
+//Program to read words from the keyboard until the word done is entered. For each word except done, report whether its first character is equal   to  its last character. For the required loop, use a
+   //     a)while statement
+
 public class KeyboardInput {
     public static void main(String args[]) {
         ArrayList<String> names = new ArrayList<String>();

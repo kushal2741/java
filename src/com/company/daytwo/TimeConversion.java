@@ -1,17 +1,21 @@
 package com.company.daytwo;
 import java.util.*;
-
+//Program to convert seconds into Hour,minutes and seconds
 public class TimeConversion {
 
-    public static void main(String args[]) {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Input seconds: ");
-        int seconds = in.nextInt();
-        int p1 = seconds % 60;
-        int p2 = seconds / 60;
-        int p3 = p2 % 60;
-        p2 = p2 / 60;
-        System.out.print(p2 +" Hour:" + p3 + " Minute:" + p1 + " Seconds:");
-        System.out.print("\n");
+    public static void main(String[] args) {
+        printDaysHoursMinutesAndSecondsFromSeconds(67526344);
+    }
+
+    public static void printDaysHoursMinutesAndSecondsFromSeconds(long seconds) {
+        long days = seconds/(60*60*24);
+        System.out.println("days = " + days);
+        long remainingSeconds = seconds - (days*60*60*24);
+        long hours = remainingSeconds/(60*60);
+        remainingSeconds = remainingSeconds - (hours*60*60);
+        long minutes = remainingSeconds/60;
+        System.out.println("minutes = " + minutes);
+        System.out.println("seconds = " + remainingSeconds%60);
+
     }
 }

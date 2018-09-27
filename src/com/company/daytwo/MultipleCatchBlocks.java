@@ -1,5 +1,5 @@
 package com.company.daytwo;
-
+//Program for multipe catch and final
 public class MultipleCatchBlocks {
     public static void main(String args[])
     {
